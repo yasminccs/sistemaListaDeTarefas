@@ -21,7 +21,7 @@ Este guia fornece instruções para configurar e executar uma aplicação de lis
      ```
 4. ** O Configurar o Banco de Dados SQLite**:
    - Será necessário criar o banco de dados `tarefas.db` e a tabela.
-   - Certifique-se de incluir os arquivos 
+   - Certifique-se de incluir os arquivos "sqldiff", "sqlite3", "sqlite3_analyzer" e "sqlite3_rsync" na mesma pasta da aplicação.
 
 ## Executando a Aplicação
 
