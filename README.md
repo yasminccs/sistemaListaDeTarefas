@@ -61,4 +61,4 @@ Agora que o ambiente está configurado, podemos executar a aplicação.
 
 ## Créditos
 
-Desenvolvido por [Seu Nome](https://github.com/yasminccs).
+Desenvolvido por [Yasmin Cibreiros Chagas](https://github.com/yasminccs).
