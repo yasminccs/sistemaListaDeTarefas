@@ -20,7 +20,8 @@ Este guia fornece instruções para configurar e executar uma aplicação de lis
      pip install flask
      ```
 4. ** O Configurar o Banco de Dados SQLite**:
-   - Será necessário criar o banco de dados `tarefas.db` e a tabela necessária.
+   - Será necessário criar o banco de dados `tarefas.db` e a tabela.
+   - Certifique-se de incluir os arquivos 
 
 ## Executando a Aplicação
 
