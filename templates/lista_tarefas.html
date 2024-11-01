@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <title>Lista de Tarefas</title>
+    <style>
+      .sortable-table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+      .sortable-table th, .sortable-table td {
+          border: 1px solid #ddd;
+          padding: 8px;
+      }
+      .sortable-table th {
+          background-color: #f2f2f2;
+          cursor: move;
+      }
+      .highlight {
+          background-color: #f9f9f9;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+      {% if mensagem %}
+      <div class="popup show">{{ mensagem }}</div>
+      {% endif %}
+      <h1>Lista de Tarefas</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      
+      <table class="sortable-table" id="tabela-tarefas">
+        <thead>
+          <tr>
+            <th>Ordem</th>
+            <th>Nome</th>
+            <th>Custo (R$)</th>
+            <th>Data Limite</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tarefa in tarefas %}
+          <tr data-id="{{ tarefa['id'] }}" class="{{ 'destaque' if tarefa['custo'] >= 1000 else '' }}">
+            <td class="ordem">{{ tarefa['ordem'] }}</td>
+            <td>{{ tarefa['nome'] | capitalize }}</td>
+            <td>R$ {{ tarefa['custo'] | round(2) | replace('.', ',') }}</td>
+            <td>{{ tarefa['data_limite'] }}</td>
+            <td>
+              <a href="{{ url_for('editar_tarefa', id=tarefa['id']) }}" class="acao editar">Editar</a>
+              <form action="{{ url_for('excluir_tarefa', id=tarefa['id']) }}" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?');">
+                <button type="submit" class="acao excluir">Excluir</button>
+              </form> 
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      <a href="{{ url_for('incluir_tarefa') }}">
+        <button class="incluir">Incluir Tarefa</button>
+      </a>
+    </div>
+
+    <script>
+      const tabela = document.getElementById('tabela-tarefas').querySelector('tbody');
+
+      const sortable = Sortable.create(tabela, {
+          animation: 150,
+          onEnd: function (evt) {
+              const ordemNova = [];
+              const rows = tabela.querySelectorAll('tr');
+
+              rows.forEach((row, index) => {
+                  ordemNova.push(row.getAttribute('data-id'));
+                  row.querySelector('.ordem').textContent = index + 1;
+              });
+              fetch('/reordenar', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ ordem_nova: ordemNova }),
+              }).then(response => {
+                  if (response.ok) {
+                      return response.json();
+                  }
+                  throw new Error('Erro na reordenação');
+              }).then(data => {
+                  console.log(data);
+              }).catch(error => {
+                  console.error('Erro:', error);
+              });
+          }
+      });
+    </script>
+</body>
+</html> 

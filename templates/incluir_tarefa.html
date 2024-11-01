@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <title>Incluir Tarefa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Incluir Nova Tarefa</h1>
+      {% if mensagem %}
+         <div class="popup show">{{ mensagem }}</div>
+      {% endif %}
+      <form action="{{ url_for('incluir_tarefa') }}" method="post">
+        <label for="nome">Nome da Tarefa:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="custo">Custo (R$):</label>
+        <input type="number" id="custo" name="custo" required step="0.01" min="0">
+        <script>
+            document.querySelector("form").addEventListener("submit", function(event) {
+              const custo = parseFloat(document.getElementById("custo").value);
+              if (custo < 0) {
+                event.preventDefault();
+                alert("O custo não pode ser negativo.");
+              }
+            });
+        </script>
+
+        <label for="data_limite">Data Limite:</label>
+        <input type="date" id="data_limite" name="data_limite" min="{{ datetime.now().strftime('%Y-%m-%d') }}" required>
+
+        <button type="submit" class="incluir">Salvar Tarefa</button>
+      </form>
+      <a href="{{ url_for('lista_tarefas') }}" class="voltar">Voltar</a>
+      <script>
+        window.onload = function() {
+            var popup = document.querySelector('.popup');
+            if (popup) {
+                setTimeout(function() {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+        };
+    </script>
+    </div>
+  </body>
+</html>
