@@ -7,7 +7,7 @@ def formatar_data(data):
     return datetime.strptime(data, '%Y-%m-%d').strftime('%d/%m/%Y')
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta' 
+app.secret_key = 'chave_secreta' 
 
 DATABASE = 'tarefas.db'
 
