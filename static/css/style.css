@@ -115,7 +115,7 @@ button {
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     text-decoration: none;
 }
 
@@ -127,12 +127,17 @@ button.excluir {
     background-color: #dc3545;
 }
 
+button.editar{
+    width: 100%;
+}
+
 button.excluir:hover {
     background-color: #c82333;
 }
 
 button.incluir {
     margin-top: 20px;
+    width: 100%;
     background-color: #28a745;
 }
 
