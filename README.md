@@ -1,5 +1,5 @@
 # Sistema de Cadastro de Listas de Tarefas
-Aplicação de Lista de Tarefas.
+Aplicação desenvolvida para a empresa FATTO Consultoria e Sistemas.
 
 # Guia de Instalação e Execução da Aplicação de Lista de Tarefas
 
