@@ -61,7 +61,7 @@
             <tr data-id="{{ tarefa['id'] }}" class="{{ 'destaque' if tarefa['custo'] >= 1000 else '' }}">
               <td class="ordem">{{ tarefa['ordem'] }}</td>
               <td>{{ tarefa['nome'] | capitalize }}</td>
-              <td>R$ {{ tarefa['custo'] | round(2) | replace('.', ',') }}</td>
+              <td>{{ tarefa['custo'] | moeda }}</td>
               <td>{{ tarefa['data_limite'] }}</td>
               <td>
                 <a href="{{ url_for('editar_tarefa', id=tarefa['id']) }}" class="acao editar">Editar</a>
