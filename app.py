@@ -6,6 +6,9 @@ from datetime import datetime
 def formatar_data(data):
     return datetime.strptime(data, '%Y-%m-%d').strftime('%d/%m/%Y')
 
+def formatar_moeda(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
 app = Flask(__name__)
 app.secret_key = 'chave_secreta' 
 
@@ -30,6 +33,8 @@ def init_db():
         ''')
         conn.commit()
         conn.close()
+
+app.jinja_env.filters['moeda'] = formatar_moeda
 
 def validar_data(data_limite):
     try:
